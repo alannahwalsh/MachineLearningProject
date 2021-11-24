@@ -22,11 +22,12 @@ X2=df.iloc[:,2]
 X=np.column_stack((X1,X2))
 y=df.iloc[:,3]
 
-# Compute polynomials
+#polynomials
 poly = PolynomialFeatures(2)
 X_poly = poly.fit_transform(X)
 print("printing in order: tn, fp, fn, tp")
-# Train our models
+
+#train models
 knnModel = KNeighborsClassifier(n_neighbors=1, weights='uniform').fit(X,y)
 knn_pred = knnModel.predict(X)
 tn,fp,fn,tp = confusion_matrix(y,knn_pred).ravel()
@@ -42,7 +43,7 @@ mostFreqModel = DummyClassifier(strategy="most_frequent")
 randomModel.fit(X,y)
 mostFreqModel.fit(X,y)
 
-# Random
+#random
 rqndom_pred = randomModel.predict(X)
 tn, fp, fn, tp = confusion_matrix(y, rqndom_pred).ravel()
 #print("random_model of no. Posts vs no. Followers:", tn, fp, fn, tp)
@@ -53,21 +54,21 @@ tn, fp, fn, tp = confusion_matrix(y,most_freq_pred).ravel()
 #print("most_freq_value_model of no. Posts vs no. Followers:", tn, fp, fn, tp)
 print("most_freq_value_model of no. Followers vs no. Following:", tn, fp, fn, tp)
 
-# logistic roc
+#logistic roc
 fpr, tpr, _ = roc_curve(y, lgModel.decision_function(X_poly),pos_label='F')
 # knn roc
 knn_proba = knnModel.predict_proba(X)
 knn_fpr, knn_tpr, thresh = roc_curve(y, knn_proba[:,1],pos_label='F')
-# most freq val roc
+#most freq val roc
 most_freq_proba = mostFreqModel.predict_proba(X)
 most_freq_fpr, most_freq_tpr, thresh = roc_curve(y,most_freq_proba[:,1],pos_label='F')
-# random roc
+#random roc
 rand_proba = randomModel.predict_proba(X)
 rand_fpr, rand_tpr, thresh = roc_curve(y,rand_proba[:,1],pos_label='F')
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-ax.plot(fpr, tpr, color='cyan')
+ax.plot(fpr, tpr, color='yellow')
 ax.plot(knn_fpr, knn_tpr, color='orange')
 ax.plot(most_freq_fpr, most_freq_tpr, color='blue')
 ax.plot(rand_fpr, rand_tpr, color='red')

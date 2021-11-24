@@ -17,19 +17,17 @@ y=df.iloc[:,3]
 #X=np.column_stack((X1,X2))
 #y=df.iloc[:,3]
 
-#plt.scatter(X1[y=='M'],X2[y=='M'],color='blue',marker="o")
-#plt.scatter(X1[y=='F'],X2[y=='F'],color='red',marker="+")
-
-#plt.title('Plot of no. Posts vs no. Followers data on own')
-#plt.xlabel('no. Posts->')
-#plt.ylabel('no. Followers->')
-
-#plt.title('Plot of no. Followers vs no. Following data on own')
-#plt.xlabel('no. Followers->')
-#plt.ylabel('no. Following->')
-
-#plt.legend(["M","F"],loc='upper right',ncol=2,fontsize=8)
-#plt.show()
+#data on own
+plt.scatter(X1[y=='M'],X2[y=='M'],color='blue',marker="o")
+plt.scatter(X1[y=='F'],X2[y=='F'],color='red',marker="+")
+plt.title('Plot of no. Posts vs no. Followers data on own')
+plt.xlabel('no. Posts->')
+plt.ylabel('no. Followers->')
+plt.title('Plot of no. Followers vs no. Following data on own')
+plt.xlabel('no. Followers->')
+plt.ylabel('no. Following->')
+plt.legend(["M","F"],loc='upper right',ncol=2,fontsize=8)
+plt.show()
 
 #train model logistic regression
 model = LogisticRegression(penalty='none',solver='lbfgs').fit(X, y)
@@ -38,6 +36,7 @@ print("Coefficients",model.coef_)
 print("Accuracy",model.score(X, y))
 predic = model.predict(X)
 
+#decision boundary
 #extract the slope to display from model coefs
 #line_bias = model.intercept_
 #line_w = model.coef_.T
@@ -55,9 +54,6 @@ plt.title('Logistic Regression of no. Posts vs no. Followers')
 #plt.title('Logistic Regression of no. Followers vs no. Following')
 plt.xlabel('no. Followers->')
 plt.ylabel('no. Following->')
-
 #plt.legend(["decision_boundary","m", "f", "m_pred", "f_pred"]
-plt.legend(["m", "f", "m_pred", "f_pred"]
-,loc='upper right',ncol=2,fontsize=7)
-
+plt.legend(["m", "f", "m_pred", "f_pred"],loc='upper right',ncol=2,fontsize=7)
 plt.show()
